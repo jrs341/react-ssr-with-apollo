@@ -1,0 +1,19 @@
+{
+  "name": "react-ssr-with-apollo",
+  "version": "1.0.0",
+  "description": "Basic setup for rendering REACT from the server wrapped with Apollo",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrs341/react-ssr-with-apollo.git"
+  },
+  "author": "Jason Sinn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jrs341/react-ssr-with-apollo/issues"
+  },
+  "homepage": "https://github.com/jrs341/react-ssr-with-apollo#readme"
+}
