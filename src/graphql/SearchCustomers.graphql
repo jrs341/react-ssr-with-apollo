@@ -1,0 +1,7 @@
+query searchCustomers($query: String) {
+	searchCustomer(query: $query) {
+	given_name
+	family_name
+	email
+	}
+}

@@ -27,11 +27,12 @@ let PORT = 3000;
 if (process.env.PORT) {
   PORT = parseInt(process.env.PORT, 10);
 }
-// 'http://localhost:3010'
+
 const API_HOST =
   process.env.NODE_ENV !== 'production'
-    ? 'https://graphql-server-basic.herokuapp.com/'
-    : 'https://api.githunt.com';
+    ? 'http://localhost:3010'
+    // ? 'https://graphql-server-basic.herokuapp.com/'
+    : ''
 
 const app = new Express();
 

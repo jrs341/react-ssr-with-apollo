@@ -1,0 +1,7 @@
+query allCustomers {
+	allCustomers {
+	given_name
+	family_name
+	email
+	}
+}
