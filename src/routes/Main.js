@@ -23,39 +23,42 @@ export default class Main extends React.Component{
 
 		return(
 			<div>
-			<h1> This is Calhoun's </h1>
+			<h1> Calhoun's Demo Dashboard </h1>
 			<h1> Search Customers </h1>
-	      	<input
-		      	placeholder='Search ...'
-		      	type='text'
-		      	onChange={this.onChange}
-	      	/>
-	      	{ this.state.query == ''
-	      		? <div style={{height:'30px', width:'80px'}}></div>
-	      		: <Query query={SEARCH_CUSTOMERS}
-	      		ssr={false}
-	      		variables={{query: this.state.query}}>
-	      	{ ({loading, data}) => {
-	      		if (loading) {
-	      			return (<h1> loading </h1>)
-	      		} 
-	      		else if (data == undefined || data.searchCustomer.length === 0){
-	      			return null
-	      		} else {
-	      			return (
-	      				<div>
-	      				<h3> Results </h3>
-	      				{data.searchCustomer.map(customer => {
-	      					return (<p> {customer.given_name + ' : ' + customer.email} </p>)
-	      				})}
-	      				</div>
-	      			)
-	      		}
-	      	}
-	    	}
-	    	</Query>
-		}
-	
+			<input
+				placeholder='Search ...'
+				type='text'
+				onChange={this.onChange}
+				style={{display:'block'}}
+			/>
+			{ this.state.query != ''
+				? <select>
+					<option> Add Customer </option>
+				{	this.state.query != ''
+					? <Query query={SEARCH_CUSTOMERS}
+						ssr={false}
+						variables={{query: this.state.query}}>
+						{ ({loading, data}) => {
+							if (loading) {
+								return (<option> loading </option>)
+							} else if (data == undefined || data.searchCustomer.length === 0) {
+								return <option> Add Customer </option>
+							} else {
+								const options = data.searchCustomer.map(customer => {
+									return (<option key={customer.email}> {customer.given_name + ' : ' + customer.email} </option>)
+								})
+								return options
+							}
+						}
+						}
+					</Query>
+					: null
+				}
+				</select>
+				: <button> Add Customer </button>
+			}
+			
+	      	
 			<Query query={ALL_CUSTOMERS}>
 	        { ({loading, data}) => {
 	            if (loading) {
@@ -65,7 +68,7 @@ export default class Main extends React.Component{
 	                <div>
 	                  <h1> All Customers </h1>
 	                  {data.allCustomers.map(customer => {
-	                    return (<p> {customer.given_name + ' : ' + customer.email} </p>)
+	                    return (<p key={customer.email}> {customer.given_name + ' : ' + customer.email} </p>)
 	                  })}
 	                </div>
 	              )
