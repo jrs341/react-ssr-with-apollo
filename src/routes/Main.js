@@ -9,14 +9,22 @@ export default class Main extends React.Component{
 		super()
 
 		this.state = {
-			query: ''
+			query: '',
+			customer: ''
 		}
 
 		this.onChange = this.onChange.bind(this)
+		this.onSelect = this.onSelect.bind(this)
 	}
 
 	onChange(event) {
 		this.setState({query:event.target.value})
+	}
+
+	onSelect(event) {
+		this.setState({customer: event.target.value})
+		console.log('*** select ****', event.target.value)
+		console.log(this.state.customer)
 	}
 
 	render() {
@@ -45,7 +53,8 @@ export default class Main extends React.Component{
 								return <option> Add Customer </option>
 							} else {
 								const options = data.searchCustomer.map(customer => {
-									return (<option key={customer.email}> {customer.given_name + ' : ' + customer.email} </option>)
+									return (<option key={customer.email} value={customer.email}
+										onClick={this.onSelect}> {customer.given_name} </option>)
 								})
 								return options
 							}
