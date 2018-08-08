@@ -23,8 +23,7 @@ export default class Main extends React.Component{
 
 	onSelect(event) {
 		this.setState({customer: event.target.value})
-		console.log('*** select ****', event.target.value)
-		console.log(this.state.customer)
+		console.log('customer', event.target.innerText)
 	}
 
 	render() {
@@ -34,36 +33,36 @@ export default class Main extends React.Component{
 			<h1> Calhoun's Demo Dashboard </h1>
 			<h1> Search Customers </h1>
 			<input
+				tabIndex = '1'
 				placeholder='Search ...'
 				type='text'
 				onChange={this.onChange}
 				style={{display:'block'}}
 			/>
 			{ this.state.query != ''
-				? <select>
-					<option> Add Customer </option>
-				{	this.state.query != ''
-					? <Query query={SEARCH_CUSTOMERS}
-						ssr={false}
-						variables={{query: this.state.query}}>
-						{ ({loading, data}) => {
-							if (loading) {
-								return (<option> loading </option>)
-							} else if (data == undefined || data.searchCustomer.length === 0) {
-								return <option> Add Customer </option>
-							} else {
-								const options = data.searchCustomer.map(customer => {
-									return (<option key={customer.email} value={customer.email}
-										onClick={this.onSelect}> {customer.given_name} </option>)
-								})
-								return options
+				? <ul>
+					{ this.state.query != ''
+						? <Query query={SEARCH_CUSTOMERS}
+							ssr={false}
+							variables={{query: this.state.query}}>
+							{({loading, data}) => {
+									if (loading) {
+										return (<li> loading </li>)
+									} else if (data == undefined || data.searchCustomer.length === 0) {
+										return (<li> Add Customer </li>)
+									} else {
+										const options = data.searchCustomer.map((customer, i) => {
+											return (<li tabIndex={i + 2}> <span key={'span' + i}
+												onClick={this.onSelect}>{customer.given_name}</span> </li>)
+										})
+										return options
+									}
+								}
 							}
+						  </Query>
+						: null
 						}
-						}
-					</Query>
-					: null
-				}
-				</select>
+				  </ul>
 				: <button> Add Customer </button>
 			}
 			
@@ -77,7 +76,7 @@ export default class Main extends React.Component{
 	                <div>
 	                  <h1> All Customers </h1>
 	                  {data.allCustomers.map(customer => {
-	                    return (<p key={customer.email}> {customer.given_name + ' : ' + customer.email} </p>)
+	                    return (<p key={customer.email}> {customer.given_name + ' ' + customer.family_name + ' : ' + customer.email} </p>)
 	                  })}
 	                </div>
 	              )

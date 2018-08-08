@@ -18,7 +18,7 @@ const Html = ({ content, client: { cache } }) => (
     <body>
       <div id="content" dangerouslySetInnerHTML={{ __html: content }} />
       <div id="footer">
-        <ul>
+       {/* <ul>
           <li>
             Fork on <a href="https://github.com/apollostack/GitHunt">Github</a>
           </li>
@@ -26,7 +26,7 @@ const Html = ({ content, client: { cache } }) => (
             This is an <a href="http://www.apollostack.com/">Apollo</a> example
             app
           </li>
-        </ul>
+        </ul>*/}
       </div>
       <script
         charSet="UTF-8"
