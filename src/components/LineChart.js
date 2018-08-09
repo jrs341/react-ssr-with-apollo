@@ -10,7 +10,7 @@ export default class LineChart extends Component {
   static defaultProps = {
     data: [],  
     color: '#2196F3',  
-    svgHeight: 35,  
+    svgHeight: 60,  
     svgWidth: 100
   }
 
@@ -21,32 +21,54 @@ export default class LineChart extends Component {
       
     }
 
+    this.makeAxis = this.makeAxis.bind(this)
+    this.makeMajorAxis = this.makeMajorAxis.bind(this)
+
   }
 
   makeAxis() {
-    return (
-      <g style={{stroke: '#bdc3c7'}}>
-        <line x1='0' y1='20' x2='100' y2='20' style={{stroke:'#2196F3',strokeWidth:'.5'}}/>
-        <line x1='0' y1='20' x2='0' y2='0' style={{stroke:'#2196F3',strokeWidth:'.7'}}/>
-        <line x1='-3' y1='2.08' x2='100' y2='2.08' style={{stroke:'red', strokeWidth:'.2'}}/>
-        <line x1='-3' y1='4' x4='100' y2='4' style={{stroke:'yellow', strokeWidth:'.1'}}/>
-        <line x1='-5' y1='6' x2='100' y2='6' style={{stroke:'#2196F3', strokeWidth:'.1'}}/>
-        <line x1='-5' y1='8' x2='100' y2='8' style={{stroke:'#2196F3', strokeWidth:'.1'}}/>
-        <line x1='-5' y1='10' x2='100' y2='10' style={{stroke:'#2196F3', strokeWidth:'.1'}}/>
-        <line x1='-5' y1='12' x2='100' y2='12' style={{stroke:'#2196F3', strokeWidth:'.1'}}/>
-        <line x1='-5' y1='14' x2='100' y2='14' style={{stroke:'#2196F3', strokeWidth:'.1'}}/>
-        <line x1='-5' y1='16' x2='100' y2='16' style={{stroke:'#2196F3', strokeWidth:'.1'}}/>
-        <line x1='-5' y1='18' x2='100' y2='18' style={{stroke:'#2196F3', strokeWidth:'.1'}}/>
+    return(
+      <g>
+      {this.makeMajorAxis()}
+      {this.makeMinorXAxis()}
       </g>
     )
+  }
+
+  makeMajorAxis() {
+    return (
+      <g>
+        <line key='majorX' x1='3' y1='30' x2='100' y2='30' style={{stroke:'black',strokeWidth:'.3'}}/>
+        <line key='majorY' x1='5' y1='32' x2='5' y2='0' style={{stroke:'black',strokeWidth:'.3'}}/>
+      </g>
+    )
+  }
+
+  makeMinorXAxis() {
+    const { svgWidth } = this.props
+    const minorXAxis = []
+    for (var i = 1; i < 10; i++) {
+      if (i === 1 || i === 2) {
+        i === 1
+          ?  minorXAxis.push(<line key={i} x1='3' y1='2.08' x2={svgWidth} y2='2.08' style={{stroke:'red', strokeWidth:'.2'}}/>)
+          :  minorXAxis.push(<line key={i} x1='3' y1='6' x2={svgWidth} y2='6' style={{stroke:'orange', strokeWidth:'.1'}}/>)  
+      } else {
+          minorXAxis.push(<line key={i} x1='3' y1={i * 3} x2={svgWidth} y2={i * 3} style={{stroke:'black', strokeWidth:'.1'}}/>)
+      }
+    }
+    return minorXAxis
+  }
+
+  makeMinorYAxis() {
+
   }
 
   render () {
     const {data, svgHeight, svgWidth} = this.props
     return (
-      <svg viewBox='0 0 100 35'>
+      <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`}>
         {data.map((point, i) => {
-          return <circle cx={i/10} cy={(10 - point.level) * 2} r='.2'/> 
+          return <circle key={i} style={{stroke:'#2196F3'}} cx={i/10 + 5} cy={(10 - point.level) * 3} r='.05'/> 
         })}
         {this.makeAxis()}
       </svg>
