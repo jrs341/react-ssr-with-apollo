@@ -66,8 +66,12 @@ export default class LineChart extends Component {
   makeMinorYAxis() {
     const { data, svgHeight, svgWidth } = this.props
     const minorYAxis = []
-    for (var i = 1; i < svgWidth/7; i++) {
-      minorYAxis.push(<line key={'minorY' + i} x1={i * 10 + 5} y1={svgHeight - 8} x2={i * 10 + 5} y2='0' style={{stroke:'black',strokeWidth:'.1'}}/>)
+    for (var i = 1; i < svgWidth/5; i++) {
+      if (i % 2 === 0) {
+        minorYAxis.push(<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 8} x2={i * 5 + 5} y2='0' style={{stroke:'black',strokeWidth:'.1'}}/>)
+      } else {
+        minorYAxis.push(<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 8} x2={i * 5 + 5} y2='0' style={{stroke:'black',strokeDasharray:'1,.5',strokeWidth:'.1'}}/>)
+      }
     }
     return minorYAxis
   }
