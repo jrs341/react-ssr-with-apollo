@@ -10,8 +10,8 @@ export default class LineChart extends Component {
   static defaultProps = {
     data: [],  
     color: '#2196F3',  
-    svgHeight: 40,  
-    svgWidth: 75
+    svgHeight: 42,  
+    svgWidth: 77
   }
 
   constructor (props) {
@@ -42,8 +42,8 @@ export default class LineChart extends Component {
     const { svgHeight, svgWidth } = this.props
     return (
       [
-        <line key='majorX' x1='3' y1={svgHeight - 10} x2={svgWidth} y2={svgHeight - 10} style={{stroke:'black',strokeWidth:'.3'}}/>,
-        <line key='majorY' x1='5' y1={svgHeight - 8} x2='5' y2='0' style={{stroke:'black',strokeWidth:'.3'}}/>
+        <line key='majorX' x1='3' y1={svgHeight - 12} x2={svgWidth} y2={svgHeight - 12} style={{stroke:'black',strokeWidth:'.3'}}/>,
+        <line key='majorY' x1='5' y1={svgHeight - 10} x2='5' y2='0' style={{stroke:'black',strokeWidth:'.3'}}/>
       ]
     )
   }
@@ -51,13 +51,16 @@ export default class LineChart extends Component {
   makeMinorXAxis() {
     const { svgWidth } = this.props
     const minorXAxis = []
-    for (var i = 1; i < 10; i++) {
+    for (var i = 0; i < 10; i++) {
       if (i === 1 || i === 2) {
         i === 1
-          ?  minorXAxis.push(<line key={'minorX' + i} x1='3' y1='2.08' x2={svgWidth} y2='2.08' style={{stroke:'red', strokeWidth:'.2'}}/>)
-          :  minorXAxis.push(<line key={'minorX' + i} x1='3' y1='6' x2={svgWidth} y2='6' style={{stroke:'orange', strokeWidth:'.1'}}/>)  
+          ?  minorXAxis.push([<line key={'minorX' + i} x1='3' y1='3.12' x2={svgWidth} y2='3.12' style={{stroke:'red', strokeWidth:'.2'}}/>,
+              <text x='0' y='3.6' style={{fill: 'red', fontSize:'1.5'}}> 8.96 </text>])
+          :  minorXAxis.push([<line key={'minorX' + i} x1='3' y1={i * 3} x2={svgWidth} y2={i * 3} style={{stroke:'orange', strokeWidth:'.1'}}/>,
+              <text x='1' y={(i * 3) + .4} style={{fill: 'black', fontSize:'1.5'}}> {(i * 3) + 2} </text>])  
       } else {
-          minorXAxis.push(<line key={'minorX' + i} x1='3' y1={i * 3} x2={svgWidth} y2={i * 3} style={{stroke:'black', strokeWidth:'.1'}}/>)
+          minorXAxis.push([<line key={'minorX' + i} x1='3' y1={i * 3} x2={svgWidth} y2={i * 3} style={{stroke:'black', strokeWidth:'.1'}}/>,
+            <text x='1' y={(i * 3) + .4} style={{fill: 'black', fontSize:'1.5'}}> {(30 - (i * 3))/3} </text>])
       }
     }
     return minorXAxis
@@ -68,9 +71,10 @@ export default class LineChart extends Component {
     const minorYAxis = []
     for (var i = 1; i < svgWidth/5; i++) {
       if (i % 2 === 0) {
-        minorYAxis.push(<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 8} x2={i * 5 + 5} y2='0' style={{stroke:'black',strokeWidth:'.1'}}/>)
+        minorYAxis.push([<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 10} x2={i * 5 + 5} y2='0' style={{stroke:'grey',strokeWidth:'.1'}}/>,
+          <text x={i * 5 + 4.5} y={svgHeight - 8} style={{fill: 'black', fontSize:'1.5'}}> {(30 - (i * 3))/3} </text>])
       } else {
-        minorYAxis.push(<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 8} x2={i * 5 + 5} y2='0' style={{stroke:'black',strokeDasharray:'1,.5',strokeWidth:'.1'}}/>)
+        minorYAxis.push(<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 10} x2={i * 5 + 5} y2='0' style={{stroke:'grey',strokeDasharray:'1,.5',strokeWidth:'.1'}}/>)
       }
     }
     return minorYAxis
@@ -83,7 +87,6 @@ export default class LineChart extends Component {
     const twelveHour = Number(data[data.length -1].level) - Number(data[data.length -49].level)
     const twentyFourHour = Number(data[data.length -1].level) - Number(data[data.length -97].level)
     const fortyEightHour = Number(data[data.length -1].level) - Number(data[data.length -193].level)
-    console.log('sixHour', twelveHour)
     const sixHourColor = sixHour < 0
       ? 'green'
       : sixHour === 0
@@ -132,7 +135,7 @@ export default class LineChart extends Component {
     // plus another 2 days prediction and 4 data points per hour * 24 * 2 = 192
     // added together = 672/svgWidth = 9.03 
     return (
-      <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`}>
+      <svg viewBox={`-1 -1 ${svgWidth} ${svgHeight}`}>
         {data.map((point, i) => {
           return <circle key={i} style={{stroke:'#2196F3', fill:'#2196F3'}} cx={i/9.03 + 5} cy={(10 - point.level) * 3} r='.05'/> 
         })}
