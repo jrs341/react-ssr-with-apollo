@@ -19,7 +19,6 @@ export default class Main extends React.Component{
 
 		this.onChange = this.onChange.bind(this)
 		this.onSelect = this.onSelect.bind(this)
-		// this.renderData = this.renderData.bind(this)
 	}
 
 	onChange(event) {
@@ -29,10 +28,6 @@ export default class Main extends React.Component{
 	onSelect(event) {
 		this.setState({customer: event.target.value})
 		console.log('customer', event.target.innerText)
-	}
-
-	renderData() {
-		console.log('renderData')
 	}
 
 	render() {
@@ -55,9 +50,6 @@ export default class Main extends React.Component{
 				}}
 				
 			</Query>
-			{/*<Canvas>
-			</Canvas>
-			{this.renderData()}*/}
 			<input
 				tabIndex = '1'
 				placeholder='Search ...'
