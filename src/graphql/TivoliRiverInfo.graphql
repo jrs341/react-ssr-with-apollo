@@ -1,0 +1,6 @@
+query tivoliRiverInfo {
+	getTivoliRiverInfo {
+	date
+	level
+	}
+}

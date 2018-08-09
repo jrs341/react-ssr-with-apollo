@@ -1,8 +1,12 @@
 import React from 'react'
 import { Query } from 'react-apollo'
 
+import Canvas from '../components/Canvas'
+import LineChart from '../components/LineChart'
+
 import ALL_CUSTOMERS from '../graphql/AllCustomers.graphql'
 import SEARCH_CUSTOMERS from '../graphql/SearchCustomers.graphql'
+import TIVOLI_RIVER_INFO from '../graphql/TivoliRiverInfo.graphql'
 
 export default class Main extends React.Component{
 	constructor() {
@@ -15,6 +19,7 @@ export default class Main extends React.Component{
 
 		this.onChange = this.onChange.bind(this)
 		this.onSelect = this.onSelect.bind(this)
+		// this.renderData = this.renderData.bind(this)
 	}
 
 	onChange(event) {
@@ -26,12 +31,33 @@ export default class Main extends React.Component{
 		console.log('customer', event.target.innerText)
 	}
 
+	renderData() {
+		console.log('renderData')
+	}
+
 	render() {
 
 		return(
 			<div>
 			<h1> Calhoun's Demo Dashboard </h1>
 			<h1> Search Customers </h1>
+			<Query query={TIVOLI_RIVER_INFO}
+				ssr={true}>
+				{({loading, data}) => {
+					if (loading) {
+						return (<h3> Loading </h3>)
+					} else if (data == undefined || data.getTivoliRiverInfo.length === 0) {
+						return (<h3> No Data </h3>)
+					} else {
+						return (<LineChart data={data.getTivoliRiverInfo}>
+						</LineChart>)
+					}
+				}}
+				
+			</Query>
+			{/*<Canvas>
+			</Canvas>
+			{this.renderData()}*/}
 			<input
 				tabIndex = '1'
 				placeholder='Search ...'
