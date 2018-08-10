@@ -28,12 +28,12 @@ export default class LineChart extends Component {
 
   }
 
-  makeAxis() {
+  makeAxis(data) {
     return(
       <g>
       {this.makeMajorAxis()}
       {this.makeMinorXAxis()}
-      {this.makeMinorYAxis()}
+      {this.makeMinorYAxis(data)}
       </g>
     )
   }
@@ -66,13 +66,24 @@ export default class LineChart extends Component {
     return minorXAxis
   }
 
-  makeMinorYAxis() {
-    const { data, svgHeight, svgWidth } = this.props
+  makeMinorYAxis(data) {
+    const { svgHeight, svgWidth } = this.props
     const minorYAxis = []
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     for (var i = 1; i < svgWidth/5; i++) {
       if (i % 2 === 0) {
         minorYAxis.push([<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 10} x2={i * 5 + 5} y2='0' style={{stroke:'grey',strokeWidth:'.1'}}/>,
-          <text x={i * 5 + 4.5} y={svgHeight - 8} style={{fill: 'black', fontSize:'1.5'}}> {(30 - (i * 3))/3} </text>])
+          <text x={i * 5 + 4.5} y={svgHeight - 8} style={{fill: 'black', fontSize:'1.5'}}>   </text>])
+      } else if (i <= 10) {
+        const date = new Date(data[i * 48].date)
+        console.log('date', date)
+        const month = months[date.getMonth()]
+        const day = days[date.getDay()]
+        const index = date.getDate()
+        const hour = date.getHours()
+        minorYAxis.push([<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 10} x2={i * 5 + 5} y2='0' style={{stroke:'grey',strokeDasharray:'1,.5',strokeWidth:'.1'}}/>,
+          <text x={i * 5 + 4.5} y={svgHeight - 8} style={{fill: 'black', fontSize:'1.5'}}> {month} : {day} : {index}  </text>])
       } else {
         minorYAxis.push(<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 10} x2={i * 5 + 5} y2='0' style={{stroke:'grey',strokeDasharray:'1,.5',strokeWidth:'.1'}}/>)
       }
@@ -82,6 +93,15 @@ export default class LineChart extends Component {
 
   render () {
     const {data, svgHeight, svgWidth} = this.props
+    const firstFour = data.slice(0,4)
+    let shiftData = []
+    firstFour.map((obj, i) => {
+      if (obj.date.indexOf(':00') < 16) {
+        shiftData = [...data].splice(i)
+      } else {
+        return
+      }
+    })
     const lastValue = data[data.length -1]
     const sixHour = Number(data[data.length -1].level) - Number(data[data.length -25].level)
     const twelveHour = Number(data[data.length -1].level) - Number(data[data.length -49].level)
@@ -136,10 +156,10 @@ export default class LineChart extends Component {
     // added together = 672/svgWidth = 9.03 
     return (
       <svg viewBox={`-1 -1 ${svgWidth} ${svgHeight}`}>
-        {data.map((point, i) => {
+        {shiftData.map((point, i) => {
           return <circle key={i} style={{stroke:'#2196F3', fill:'#2196F3'}} cx={i/9.03 + 5} cy={(10 - point.level) * 3} r='.05'/> 
         })}
-        {this.makeAxis()}
+        {this.makeAxis(shiftData)}
         <rect x='6' y='0' width='27' height='10' style={{strokeWidth:'.2', stroke:'orange', fill:'white'}}/>
         <text x='7' y='2' style={{fill: 'black', fontSize:'1.5'}}> Last Observation: {lastValue.date.slice(0,16)} </text>
         <text x='7' y='4' style={{fill: 'black', fontSize:'1.5'}}> Last Observed Value: {lastValue.level}  ft</text>
