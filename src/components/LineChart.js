@@ -69,24 +69,56 @@ export default class LineChart extends Component {
   makeMinorYAxis(data) {
     const { svgHeight, svgWidth } = this.props
     const minorYAxis = []
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    for (var i = 1; i < svgWidth/5; i++) {
-      if (i % 2 === 0) {
-        minorYAxis.push([<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 10} x2={i * 5 + 5} y2='0' style={{stroke:'grey',strokeWidth:'.1'}}/>,
-          <text x={i * 5 + 4.5} y={svgHeight - 8} style={{fill: 'black', fontSize:'1.5'}}>   </text>])
-      } else if (i <= 10) {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    svgWidth/5
+    for (var i = 1; i <= 14; i++) {
+      if (i < 10){
         const date = new Date(data[i * 48].date)
-        console.log('date', date)
         const month = months[date.getMonth()]
         const day = days[date.getDay()]
         const index = date.getDate()
-        const hour = date.getHours()
-        minorYAxis.push([<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 10} x2={i * 5 + 5} y2='0' style={{stroke:'grey',strokeDasharray:'1,.5',strokeWidth:'.1'}}/>,
-          <text x={i * 5 + 4.5} y={svgHeight - 8} style={{fill: 'black', fontSize:'1.5'}}> {month} : {day} : {index}  </text>])
+        const hour = date.getHours() - 1
+        const minutes = date.getMinutes() === 0
+          ? '00'
+          : '0'
+        if (i % 2 === 0) {
+          minorYAxis.push([<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 10} x2={i * 5 + 5} y2='0' style={{stroke:'grey',strokeWidth:'.1'}}/>,
+          <text x={i * 5 + 4} y={svgHeight - 8} style={{fill: 'black', fontSize:'1.5'}}>{hour}:{minutes}</text>])
+        } else {
+          minorYAxis.push([<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 10} x2={i * 5 + 5} y2='0' style={{stroke:'grey',strokeDasharray:'1,.5',strokeWidth:'.1'}}/>,
+          <text x={i * 5 + 3} y={svgHeight - 8} style={{fill: 'black', fontSize:'1.5'}}>{hour}:{minutes}</text>])
+        } 
       } else {
-        minorYAxis.push(<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 10} x2={i * 5 + 5} y2='0' style={{stroke:'grey',strokeDasharray:'1,.5',strokeWidth:'.1'}}/>)
-      }
+          const date = new Date()
+          const month = months[date.getMonth()]
+          Date.prototype.addDays = (days) => {
+            return new Date(date.getTime() + days * 86400000)
+          }
+          // console.log(new Date().addDays(2))
+          let day = ''
+          if (i === 10 || (i - 10) % 2 === 0) {
+            day = days[new Date().addDays((i - 10)/2).getDay()]
+          } else {
+            day = days[new Date().addDays((i - 11)/2).getDay()]
+          }
+          const index = date.getDate()
+          const hour = date.getHours()
+          const minutes = date.getMinutes() === 0
+            ? '00'
+            : '00'
+          if (i % 2 === 0){
+            minorYAxis.push([<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 10} x2={i * 5 + 5} y2='0' style={{stroke:'grey',strokeWidth:'.1'}}/>,
+            <text x={i * 5 + 4} y={svgHeight - 8} style={{fill: 'black', fontSize:'1.5'}}>{hour}:{minutes}</text>,
+            <text x={i * 5 + 4} y={svgHeight - 6} style={{fill: 'black', fontSize:'1.5'}}>{day}</text>,
+            <text x={i * 5 + 4} y={svgHeight - 4} style={{fill: 'black', fontSize:'1.5'}}>{month} {index}</text>])
+          } else {
+            minorYAxis.push([<line key={'minorY' + i} x1={i * 5 + 5} y1={svgHeight - 10} x2={i * 5 + 5} y2='0' style={{stroke:'grey',strokeDasharray:'1,.5',strokeWidth:'.1'}}/>,
+            <text x={i * 5 + 3} y={svgHeight - 8} style={{fill: 'black', fontSize:'1.5'}}>{hour + 12}:{minutes}</text>,
+            <text x={i * 5 + 3} y={svgHeight - 6} style={{fill: 'black', fontSize:'1.5'}}>{day}</text>,
+            <text x={i * 5 + 3} y={svgHeight - 4} style={{fill: 'black', fontSize:'1.5'}}>{month} {index}</text>])
+          }
+      }   
     }
     return minorYAxis
   }
