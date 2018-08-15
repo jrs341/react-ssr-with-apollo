@@ -5,6 +5,7 @@ import LineChart from '../components/LineChart/LineChart'
 import DataBox from '../components/LineChart/DataBox'
 import MajorAxis from '../components/LineChart/MajorAxis'
 import MinorAxis from '../components/LineChart/MinorAxis'
+import Spinner from '../components/DataLoading/Spinner'
 
 import ALL_CUSTOMERS from '../graphql/AllCustomers.graphql'
 import SEARCH_CUSTOMERS from '../graphql/SearchCustomers.graphql'
@@ -42,7 +43,7 @@ export default class Main extends React.Component{
 				ssr={true}>
 				{({loading, data}) => {
 					if (loading) {
-						return (<h3> Loading </h3>)
+						return (<Spinner />)
 					} else if (data == undefined || data.getTivoliRiverInfo.length === 0) {
 						return (<h3> No Data </h3>)
 					} else {
@@ -73,7 +74,7 @@ export default class Main extends React.Component{
 							variables={{query: this.state.query}}>
 							{({loading, data}) => {
 									if (loading) {
-										return (<li> loading </li>)
+										return (<li> <Spinner /> </li>)
 									} else if (data == undefined || data.searchCustomer.length === 0) {
 										return (<li> Add Customer </li>)
 									} else {
@@ -96,7 +97,7 @@ export default class Main extends React.Component{
 			<Query query={ALL_CUSTOMERS}>
 	        { ({loading, data}) => {
 	            if (loading) {
-	             return ( <h1> Loading </h1> )
+	             return ( <h1> <Spinner /> </h1> )
 	            } else {
 	              return ( 
 	                <div>
