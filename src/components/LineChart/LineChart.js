@@ -10,7 +10,7 @@ export default class LineChart extends Component{
 	}
 
 	static defaultProps = {
-		data: [],
+		// data: [],
 		color: '#2196F3',
 		svgHeight: 40,
 		svgWidth: 80
@@ -26,6 +26,7 @@ export default class LineChart extends Component{
 
 	render () {
 		const { data:{data}, data:{trendInfo}, svgWidth, svgHeight } = this.props
+		// console.log('**line props**', trendInfo)
 		return(
 			<svg viewBox={`-1 -1 ${svgWidth} ${svgHeight}`}>
 				<g>
