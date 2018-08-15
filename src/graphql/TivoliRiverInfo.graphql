@@ -1,15 +1,17 @@
 query tivoliRiverInfo {
 	getTivoliRiverInfo {
-	lastReading{
-		date
-		level
-	}
-	sixHourDelta
-	twelveHourDelta
-	twentyFourHourDelta
-	fortyEightHourDelta
-	data {
-		level
-	}
+		trendInfo {
+			lastReading{
+			date
+			level
+		}
+			sixHourDelta
+			twelveHourDelta
+			twentyFourHourDelta
+			fortyEightHourDelta
+		}
+		data {
+			level
+		}
 	}
 }
