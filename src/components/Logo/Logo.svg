@@ -1,0 +1,5 @@
+<svg width='16' height='16' xmlns='http://www.w3.org/2000/svg'
+	style='background-color: white'>
+    <text key='logoC' x='3' y='14.5' style='fill: blue; font-size: 18; font-family: Akronim'> C </text>
+    <text key='logoRV' x='6' y='11' style='fill: red; font-size: 6; font-family: Amita'> RV </text>
+</svg>

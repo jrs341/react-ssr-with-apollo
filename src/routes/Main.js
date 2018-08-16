@@ -2,6 +2,7 @@ import React from 'react'
 import { Query } from 'react-apollo'
 
 import LineChart from '../components/LineChart/LineChart'
+import { Logo } from '../components/Logo'
 import { Spinner } from '../components/Spinner'
 
 import ALL_CUSTOMERS from '../graphql/AllCustomers.graphql'
@@ -35,6 +36,7 @@ export default class Main extends React.Component{
 		return(
 			<div>
 			<h1> Calhoun's Demo Dashboard </h1>
+			<Logo />
 			<Query query={TIVOLI_RIVER_INFO}
 				ssr={true}>
 				{({loading, data}) => {
