@@ -35,7 +35,6 @@ export default class Main extends React.Component{
 		return(
 			<div>
 			<h1> Calhoun's Demo Dashboard </h1>
-			<h1> Search Customers </h1>
 			<Query query={TIVOLI_RIVER_INFO}
 				ssr={true}>
 				{({loading, data}) => {
