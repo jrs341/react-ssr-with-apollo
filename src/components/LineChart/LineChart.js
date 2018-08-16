@@ -19,7 +19,7 @@ export default class LineChart extends Component{
 		const { data:{data}, data:{trendInfo}, svgWidth, svgHeight } = this.props
 		return(
 			<svg viewBox={`-1 -1 ${svgWidth} ${svgHeight}`}>
-				<g>
+				<g key='main group'>
 				{data.map((point, i) => {
           return <circle key={i} style={{stroke:'#2196F3', fill:'#2196F3'}} cx={i/9.6 + 5.5} cy={(10 - point.level) * 3} r='.05'/> 
         })}

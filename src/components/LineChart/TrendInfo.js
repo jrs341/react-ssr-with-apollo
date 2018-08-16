@@ -5,8 +5,15 @@ import { Spinner } from '../Spinner'
 
 export default class TrendInfo extends Component {
 	static propTypes = {
-
+    
 	}
+
+  static defaultProps = {
+    textStyle: {
+        fill: 'black',
+        fontSize:'1.5'
+      }
+  }
 
   constructor (props) {
     super (props)
@@ -25,6 +32,7 @@ export default class TrendInfo extends Component {
   }
 
   renderPolyLine(props) {
+    const { textStyle } = this.props
     const arrows = []
     for (var key in props) {
       let points = ''
@@ -35,10 +43,7 @@ export default class TrendInfo extends Component {
       let y1 = ''
       let y2 = ''
       let text = ''
-      const textStyle = {
-        fill: 'black',
-        fontSize:'1.5'
-      }
+      
       switch(key) {
         case 'sixHourDelta':
           x = '7'
@@ -108,9 +113,9 @@ export default class TrendInfo extends Component {
           null
       }
         arrows.push([
-          <text x = {x} y = {y} style={textStyle}> {text} </text>,
-          <line x1 = {x1} y1 = {y1} x2 = {x2} y2 = {y2} style={this.arrowStyle(props[key])}/>,
-          <polyline points={points} style={this.arrowStyle(props[key])}/>])
+          <text key = {key + 'text'} x = {x} y = {y} style={textStyle}> {text} </text>,
+          <line key = {key + 'line'}x1 = {x1} y1 = {y1} x2 = {x2} y2 = {y2} style={this.arrowStyle(props[key])}/>,
+          <polyline key = {key + 'poly'} points={points} style={this.arrowStyle(props[key])}/>])
     }
     return arrows
   }
@@ -120,7 +125,7 @@ export default class TrendInfo extends Component {
 
     if (sixHourDelta != undefined) {
       return(
-      <g>{this.renderPolyLine(this.props)}</g>
+      <g key = 'arrow group'>{this.renderPolyLine(this.props)}</g>
       )
     } else {
       return(
