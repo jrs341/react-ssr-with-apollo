@@ -2,10 +2,7 @@ import React from 'react'
 import { Query } from 'react-apollo'
 
 import LineChart from '../components/LineChart/LineChart'
-import DataBox from '../components/LineChart/DataBox'
-import MajorAxis from '../components/LineChart/MajorAxis'
-import MinorAxis from '../components/LineChart/MinorAxis'
-import Spinner from '../components/DataLoading/Spinner'
+import { Spinner } from '../components/Spinner'
 
 import ALL_CUSTOMERS from '../graphql/AllCustomers.graphql'
 import SEARCH_CUSTOMERS from '../graphql/SearchCustomers.graphql'
@@ -47,14 +44,10 @@ export default class Main extends React.Component{
 					} else if (data == undefined || data.getTivoliRiverInfo.length === 0) {
 						return (<h3> No Data </h3>)
 					} else {
-						return ([<LineChart data={data.getTivoliRiverInfo}>
-						</LineChart>,
-						<DataBox
-							lastReading = {data.getTivoliRiverInfo.lastReading}
-							sixHourDelta = {data.getTivoliRiverInfo.sixHourDelta}
-							twelveHourDelta = {data.getTivoliRiverInfo.twelveHourDelta}
-							twentyFourHourDelta = {data.getTivoliRiverInfo.twentyFourHourDelta}
-							fortyEightHourDelta = {data.getTivoliRiverInfo.fortyEightHourDelta}/>])
+						return (
+							<LineChart data={data.getTivoliRiverInfo}>
+							</LineChart>
+						)
 					}
 				}}
 				

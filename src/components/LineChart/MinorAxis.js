@@ -91,7 +91,4 @@ export default class MinorAxis extends Component {
       </g>
   	)
   }
-
-
-
 }

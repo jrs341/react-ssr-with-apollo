@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 
-export default class Spinner extends Component {
+class Spinner extends Component {
   render () {
     return (
       <div className='ura-spinner-container'>
@@ -16,3 +15,5 @@ export default class Spinner extends Component {
     )
   }
 }
+
+export { Spinner }

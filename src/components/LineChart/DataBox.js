@@ -8,18 +8,6 @@ export default class DataBox extends Component {
 
 	}
 
-	// static defaultProps = {
-	// 	lastReading:{
- //      date: '0',
- //      value: '0'
- //    }
- //  }
- //    sixHourDelta: '0',
- //    twelveHourDelta: '0',
- //    twentyFourHourDelta: '0',
- //    fortyEightHourDelta: '0'
-	// }
-
 	render () {
 		const { lastReading, sixHourDelta, twelveHourDelta, twentyFourHourDelta, fortyEightHourDelta } = this.props
     if (lastReading != undefined){

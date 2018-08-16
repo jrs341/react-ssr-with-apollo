@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
+import { Spinner } from '../Spinner'
+
 export default class TrendInfo extends Component {
 	static propTypes = {
 
@@ -122,7 +124,7 @@ export default class TrendInfo extends Component {
       )
     } else {
       return(
-        <text x='7' y='2' style={{fill: 'black', fontSize:'1.5'}}> loading </text>
+        <Spinner />
       )
     }
 	}
