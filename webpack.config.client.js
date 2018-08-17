@@ -19,8 +19,8 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       },
       {
-        test: /\.(scss|sass)$/,
-        use: ['style-loader','css-loader','sass-loader'] 
+        test: /\.scss$/,
+        loader: 'style-loader!css-loader!sass-loader'
       },
       {
         test: /\.js$/,
@@ -36,6 +36,10 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'graphql-tag/loader',
       },
+      {
+        test: /\.ico$/,
+        loader: 'file-loader'
+      }
     ],
   },
   plugins: [
@@ -61,3 +65,20 @@ module.exports = {
     DEV && new webpack.optimize.AggressiveMergingPlugin(),
   ].filter(Boolean),
 };
+// (svg|png|gif|jpg|
+// use: [{
+//             loader: 'file-loader',
+//             options: {
+//                 name: '[name].[ext]',
+//                 outputPath: '/static'
+//             }
+//         }]
+ // use: ['style-loader','css-loader','sass-loader'] 
+// include: path.resolve(__dirname, path),
+        // use: {
+        //   loader: 'file-loader',
+        //   options: {
+        //     context: 'src/assets',
+        //     name: 'root[path][name].[ext]'
+        //   }
+        // }
