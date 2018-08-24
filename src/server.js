@@ -51,6 +51,8 @@ if (process.env.NODE_ENV === 'production') {
     '/static',
     proxy({ target: 'http://localhost:3020', pathRewrite: { '^/static': '' } })
   );
+  // app.use('/favicon.ico', Express.static(__dirname + './favicon.ico'))
+  // console.log('**** static express ****', Express.static(__dirname + './favicon.ico'))
 }
 const links = [
   errorLink,

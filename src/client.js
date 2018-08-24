@@ -8,6 +8,7 @@ import { ApolloLink } from 'apollo-link';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import './style/index.css';
+import '../favicon.ico';
 
 import {
   errorLink,

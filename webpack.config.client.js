@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 const DEV = process.env.NODE_ENV !== 'production';
-
+console.log('*** path ****',path.resolve(__dirname, 'build/client'))
 module.exports = {
   bail: !DEV,
   devtool: DEV ? 'cheap-module-source-map' : 'source-map',
@@ -38,7 +38,13 @@ module.exports = {
       },
       {
         test: /\.ico$/,
-        loader: 'file-loader'
+        use: [{
+            loader: 'file-loader',
+            options: {
+                name: '[name].[ext]',
+                outputPath: '/bundle/client'
+            }
+        }]
       }
     ],
   },
