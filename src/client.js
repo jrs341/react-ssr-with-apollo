@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
-import ApolloClient from 'apollo-client';
+import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloLink } from 'apollo-link';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -17,6 +17,7 @@ import {
   requestLink,
 } from './links';
 import Layout from './routes/Layout';
+import Main from './routes/Main';
 
 const links = [
   errorLink,
@@ -37,7 +38,7 @@ const client = new ApolloClient({
 hydrate(
   <ApolloProvider client={client}>
     <BrowserRouter>
-      <Layout />
+        <Layout />
     </BrowserRouter>
   </ApolloProvider>,
   document.getElementById('content')

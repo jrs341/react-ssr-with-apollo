@@ -1,0 +1,6 @@
+query allMeters {
+	allMeters {
+	_id
+	meter
+	}
+}

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
+import { ApolloProvider, withApollo } from 'react-apollo';
 import routes from './index';
+import Main from './Main'
 // import Navbar from '../components/Navbar';
 
 // const ReactGA = process.browser ? require('react-ga') : {};
@@ -19,16 +21,27 @@ import routes from './index';
 //   return null;
 // }
 
-const Layout = () => (
-  <div>
-    {/*<Route path="/" component={logPageView} />
-    <Navbar />*/}
-    <div className="container">
+class Layout extends React.Component{
+	render (props) {
+		console.log('layout 1', this.props)
+		return(
+			 <div>
+     {/*<Route path="/" component={logPageView} />
+     <Navbar />*/}
+     <div className="container">
       <Switch>
-        {routes.map(route => <Route key={`route-${route.name}`} {...route} />)}
+        <Route path='/' render={ (props) =>
+          <Main client={this.props.client} {...props}/>}/>
       </Switch>
-    </div>
-  </div>
-);
+       {/*<Switch>
+         {routes.map(route => {
+         	console.log('layout', this.props)
+         	return(<Route key={`route-${route.name}`} {...props} {...route} />)}
+         )}
+       </Switch>*/}
+     </div>
+   </div>)
+	}
+}
 
-export default Layout;
+export default withApollo(Layout)

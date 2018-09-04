@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 
 import ApolloClient from 'apollo-client';
-import { ApolloProvider, renderToStringWithData } from 'react-apollo';
+import { ApolloProvider, renderToStringWithData, withApollo } from 'react-apollo';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
@@ -73,6 +73,8 @@ app.use((req, res) => {
   });
 
   const context = {};
+
+  // const AppWithClient = withApollo(Layout);
 
   const component = (
     <ApolloProvider client={client}>

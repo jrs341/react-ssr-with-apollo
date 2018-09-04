@@ -13,6 +13,7 @@ const Html = ({ content, client: { cache } }) => (
         integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
         crossOrigin="anonymous"
       />
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
       <link href='https://fonts.googleapis.com/css?family=Akronim' rel='stylesheet'/>
       <link href='https://fonts.googleapis.com/css?family=Amita' rel='stylesheet'/>
       <link href='https://fonts.googleapis.com/css?family=Averia Gruesa Libre' rel='stylesheet'/>

@@ -1,11 +1,14 @@
 import React from 'react'
 import { Query } from 'react-apollo'
+import ApolloClient from 'apollo-client'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 
 import LineChart from '../components/LineChart/LineChart'
 // import { Logo } from '../components/Logo'
 import { Spinner } from '../components/Spinner'
 
 import ALL_CUSTOMERS from '../graphql/AllCustomers.graphql'
+import ALL_METERS from '../graphql/AllMeters.graphql'
 import SEARCH_CUSTOMERS from '../graphql/SearchCustomers.graphql'
 import TIVOLI_RIVER_INFO from '../graphql/TivoliRiverInfo.graphql'
 
@@ -23,15 +26,27 @@ export default class Main extends React.Component{
 	}
 
 	onChange(event) {
+		// client.query(SEARCH_CUSTOMERS).then(res => {
+		// 	console.log('query res', res)})
+		// .catch(err => {
+		// 	console.log('query err', err)
+		// })
+		console.log('props', this.props)
 		this.setState({query:event.target.value})
 	}
 
 	onSelect(event) {
-		this.setState({customer: event.target.value})
-		console.log('customer', event.target.innerText)
+		console.log('key', event.currentTarget.dataset.id)
+		const meters = ALL_METERS
+		console.log('meters', meters)
+		if(this.state.customer == event.target.id){
+			this.setState({customer: ''})
+		} else {
+			this.setState({customer: event.target.id})	
+		}
 	}
 
-	render() {
+	render(props) {
 
 		return(
 			<div>
@@ -72,8 +87,17 @@ export default class Main extends React.Component{
 										return (<li> Add Customer </li>)
 									} else {
 										const options = data.searchCustomer.map((customer, i) => {
-											return (<li tabIndex={i + 2}> <span key={'span' + i}
-												onClick={this.onSelect}>{customer.given_name}</span> </li>)
+											return (<li tabIndex={i + 2} key={i + 2}> {customer.given_name}
+												<i className='material-icons'
+												style={{fontSize:'12px', color:'blue'}}
+												id={customer._id}
+												onClick={this.onSelect}>{this.state.customer == customer._id ? 'cancel' : 'more_vert'}</i>
+												<menu style={this.state.customer == customer._id ? {} : {display:'none'}}>
+													<li data-id={customer._id} onClick={this.onSelect}> Checkin </li>
+													<li data-id={customer._id} onClick={this.onSelect}> CheckOut </li>
+													<li data-id={customer._id} onClick={this.onSelect}> Transfer </li>
+												</menu>
+												</li>)
 										})
 										return options
 									}
@@ -86,6 +110,32 @@ export default class Main extends React.Component{
 				: <button> Add Customer </button>
 			}
 			
+			<form name = 'checkin'>
+				<label>First Name</label>
+				<input
+				tabIndex = '2'
+				placeholder='Search ...'
+				type='text'
+				/>
+				<label>Last Name</label>
+				<input
+				tabIndex = '3'
+				placeholder='Search ...'
+				type='text'
+				/>
+				<label>Email</label>
+				<input
+				tabIndex = '4'
+				placeholder='Search ...'
+				type='email'
+				/>
+				<label>Date</label>
+				<input
+				tabIndex = '4'
+				placeholder='Search ...'
+				type='date'
+				/>
+			</form>
 	      	
 			<Query query={ALL_CUSTOMERS}>
 	        { ({loading, data}) => {
