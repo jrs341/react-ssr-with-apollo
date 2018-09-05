@@ -23,22 +23,14 @@ import Main from './Main'
 
 class Layout extends React.Component{
 	render (props) {
-		console.log('layout 1', this.props)
 		return(
 			 <div>
-     {/*<Route path="/" component={logPageView} />
-     <Navbar />*/}
+     {/*<Navbar />*/}
      <div className="container">
       <Switch>
         <Route path='/' render={ (props) =>
           <Main client={this.props.client} {...props}/>}/>
       </Switch>
-       {/*<Switch>
-         {routes.map(route => {
-         	console.log('layout', this.props)
-         	return(<Route key={`route-${route.name}`} {...props} {...route} />)}
-         )}
-       </Switch>*/}
      </div>
    </div>)
 	}

@@ -1,0 +1,10 @@
+query currentCustomers {
+	currentCustomers {
+	_id
+	given_name
+	family_name
+	email
+	meter
+	phone_number
+	}
+}
