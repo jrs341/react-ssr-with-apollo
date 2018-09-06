@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
-import { ApolloProvider, withApollo } from 'react-apollo';
+import { withApollo } from 'react-apollo';
 import routes from './index';
 import Main from './Main'
 // import Navbar from '../components/Navbar';

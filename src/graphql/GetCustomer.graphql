@@ -1,0 +1,16 @@
+query getCustomer($id: String) {
+	getCustomer(id: $id) {
+	_id
+	given_name
+	family_name
+	email
+	phone_number
+	address_line_1
+	locality
+	administrative_district_level_1
+	postal_code
+	country
+	drivers_license_num
+	drivers_license_state
+	}
+}
