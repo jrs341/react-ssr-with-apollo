@@ -56,6 +56,7 @@ class Search extends React.Component {
 				placeholder='Search ...'
 				type='text'
 				onChange={this.onChange}
+				onClick={this.props.resetForm}
 				value={this.state.query}
 				style={{display:'block'}}
 			/>

@@ -10,10 +10,10 @@ class Main extends React.Component{
 		return(
 			<div>
 			<h1> Calhoun's Demo Dashboard </h1>
-			<TivoliRiverLevel />
+			{/*<TivoliRiverLevel />*/}
 			<CustomerInfoForm />
 	    <CurrentCustomers />
-			<AllCustomers />
+			{/*<AllCustomers />*/}
 	    </div>
 		)
 	}
