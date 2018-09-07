@@ -4,6 +4,7 @@ export default class RateField extends Component {
 	render() {
 		return(
 			<fieldset form='checkin' name='rateSet'>
+			<legend> Rental Rate </legend>
 				<label>Daily</label>
 					<input
 					tabIndex = '2'

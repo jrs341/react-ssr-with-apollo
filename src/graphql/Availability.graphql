@@ -1,0 +1,6 @@
+query availability {
+	availability {
+	_id
+	meter
+	}
+}
