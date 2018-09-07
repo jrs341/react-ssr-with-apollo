@@ -1,5 +1,9 @@
 query availability {
-	availability {
+	cabinAvailability {
+	_id
+	meter
+	}
+	rvAvailability {
 	_id
 	meter
 	}

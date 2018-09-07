@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
 
-import Spinner from '../../Components/Spinner'
+import { Spinner } from '../../Components/Spinner'
 import AVAILABILITY from '../../graphql/Availability.graphql'
 
 export default class Availability extends Component {
@@ -15,7 +15,17 @@ export default class Availability extends Component {
 						return (
 							<div>
 							<h1> Availability </h1>
-							{data.availability.map(meter => {
+							<h3> Cabins </h3>
+							{data.cabinAvailability.map(meter => {
+								return (
+									[<label> {meter.meter} </label>,
+									<input type='checkbox'
+									/>]
+								)
+								})
+							}
+							<h3> RV Spaces </h3>
+							{data.rvAvailability.map(meter => {
 								return (
 									[<label> {meter.meter} </label>,
 									<input type='checkbox'
