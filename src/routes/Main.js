@@ -15,7 +15,7 @@ class Main extends React.Component{
 			<h1> Calhoun's Demo Dashboard </h1>
 			{/*<TivoliRiverLevel />*/}
 			<CheckAvailability />
-			<Availability />
+			{/*<Availability />*/}
 			<CustomerInfoForm />
 	    <CurrentCustomers />
 			{/*<AllCustomers />*/}
