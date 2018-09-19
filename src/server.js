@@ -74,8 +74,6 @@ app.use((req, res) => {
 
   const context = {};
 
-  // const AppWithClient = withApollo(Layout);
-
   const component = (
     <ApolloProvider client={client}>
       <StaticRouter location={req.url} context={context}>

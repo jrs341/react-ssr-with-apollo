@@ -9,29 +9,53 @@ export default class DateRangeField extends Component {
 			checkout: ''
 		}
 
+		this.getDaysInMonth = this.getDaysInMonth.bind(this)
+		this.isLeapYear = this.isLeapYear.bind(this)
+		this.setCheckoutDate = this.setCheckoutDate.bind(this)
 		this.setDate = this.setDate.bind(this)
 	}
 
+	getDaysInMonth (year, month) {
+    return [31, (this.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
+	}
+
+	isLeapYear (year) {
+		console.log('year', year)
+    return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0))
+	}
+
+	setCheckoutDate (date, rate) {
+		const checkoutDate = date.getUTCDate()
+		if (rate == 'Monthly') {
+			date.setDate(1)
+			date.setMonth(date.getMonth() + 1)
+			date.setDate(Math.min(checkoutDate, this.getDaysInMonth(date.getFullYear(), date.getMonth())))
+			console.log('checkoutDate monthly', date)
+			return date
+		} else if (rate == 'Weekly') {
+			date.setDate(checkoutDate + 7)
+			console.log('wwekly', date)
+		} else {
+			date.setDate(checkoutDate + 1)
+			console.log('daily', date)
+		}
+		return date
+	}
 // currently no need to change the date format if neeeded move to resolver
 	setDate (event) {
 		if (event.target.name == 'checkout' && event.target.value == '') {
 			this.props.setParentState('checkout', 'unknown')
 		} else {
 			if (event.target.name == 'checkin' && this.props.rate != 'Daily' || this.props.rate != '') {
-				console.log('checkin', event.target.value)
-				const date = Date.parse(event.target.value)
-				console.log('date',date)
-				const checkoutDate = date.setMonth(date.getMonth + 1)
-				// const checkoutDate = new Date(date + 24*60*60*1000*30).toISOString().substr(0,10)
-				// let checkoutDate = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
-				if (this.props.rate == 'Monthly'){
-					// checkoutDate = checkoutDate + 24*60*60*1000*30
-					console.log('checkout', checkoutDate)
-					this.setState({checkout: checkoutDate})
-				} else {
-					// checkoutDate = checkoutDate + 24*60*60*1000*7
-					this.setState({checkout: checkoutDate})
-				}
+				// const checkinDate = new Date(event.target.value).toUTCString()
+				const checkinDate = new Date(event.target.value)
+				console.log('checkinDate', checkinDate)
+				this.setCheckoutDate(checkinDate, this.props.rate)
+				// if (this.props.rate == 'Monthly'){
+		
+				// } else {
+				// 	this.setState({checkout: checkoutDate})
+				// }
 			}
 			this.props.setParentState(event.target.name, event.target.value)
 		}
